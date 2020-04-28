@@ -103,6 +103,8 @@ steps:
 
   - name: notify
     image: alpine
+    KUBERNETES_SERVER:
+      from_secret: KUBERNETES_SERVER
     commands:
     - echo ${KUBERNETES_SERVER}
     - echo ${PLUGIN_NAMESPACE}
