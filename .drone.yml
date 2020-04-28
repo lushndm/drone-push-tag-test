@@ -98,8 +98,9 @@ steps:
       deployment: billing-service-admin
       repo: registry.super-ego.info/se-backoffice-billing-admin
       container: billing-service-admin
-      # tag: 1.0.0
-      tag: 1.0.0-master-8c6a243f
+      tag: 1.0.0
+      # tag: 1.0.0-master-8c6a243f
+      # tag: latest-${DRONE_COMMIT_SHA:0:8}
     when:
       # branch:
       # - dev
