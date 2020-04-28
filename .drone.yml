@@ -80,13 +80,20 @@ steps:
   - name: deploy from ${DRONE_BRANCH,,} branch to stage kubernetes cluster
     # image: quay.io/honestbee/drone-kubernetes
     image: lushndm/drone-kubernetes:0.3
-    settings:
-      kubernetes_server:
+    environment:
+      KUBERNETES_SERVER:
         from_secret: KUBERNETES_SERVER
-      kubernetes_token:
+      KUBERNETES_TOKEN:
         from_secret: KUBERNETES_TOKEN
-      kubernetes_cert:
+      KUBERNETES_CERT:
         from_secret: KUBERNETES_CERT
+    settings:
+      # kubernetes_server:
+      #   from_secret: KUBERNETES_SERVER
+      # kubernetes_token:
+      #   from_secret: KUBERNETES_TOKEN
+      # kubernetes_cert:
+      #   from_secret: KUBERNETES_CERT
       namespace: dev
       deployment: billing-service-admin
       repo: registry.super-ego.info/se-backoffice-billing-admin
