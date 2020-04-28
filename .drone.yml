@@ -126,6 +126,8 @@ steps:
   - name: notify2
     image: alpine
     commands:
+    - echo test
+    - ls
     - cat 1.txt
 
 
