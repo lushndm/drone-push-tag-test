@@ -101,6 +101,7 @@ steps:
     - echo $KUBERNETES_SERVER
     - echo ${KUBERNETES_SERVER}
     - echo ${PLUGIN_NAMESPACE}
+    - echo $PLUGIN_NAMESPACE
     - echo ${PLUGIN_KUBERNETES_USER}
     - echo ${PLUGIN_KUBERNETES_TOKEN}
     - echo ${PLUGIN_KUBERNETES_SERVER}
@@ -112,6 +113,7 @@ steps:
     - echo ${CONTAINER}
     - echo ${PLUGIN_REPO}
     - echo ${PLUGIN_TAG}
+    - /bin/update.sh
     when:
       # branch:
       # - dev
