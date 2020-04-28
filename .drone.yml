@@ -1,0 +1,110 @@
+kind: pipeline
+name: billing-admin-dev
+
+steps:
+  # - name: test
+  #   image: golang:alpine
+  #   volumes:
+  #     - name: deps
+  #       path: /go
+  #   commands:
+  #     - apk add --update --no-cache git gcc libc-dev
+  #     - go test -v ./pkg/...
+
+  # - name: build
+  #   image: golang:alpine
+  #   volumes:
+  #     - name: deps
+  #       path: /go
+  #   commands:
+  #     - apk add --update --no-cache git make
+  #     - go env -w GOPRIVATE="github.com/superegocomp/*"	
+  #     - make build
+  #   when:
+  #     ref:
+  #     - refs/heads/dev
+  #     - refs/tags/*
+  #     event:
+  #       exclude:
+  #         - pull_request
+
+  # - name: publish from ${DRONE_BRANCH,,} branch
+  #   image: plugins/docker
+  #   settings:
+  #     registry: registry.super-ego.info
+  #     username: regseuser
+  #     password: d$Wnvh&%Wm
+  #     repo: registry.super-ego.info/se-backoffice-billing-admin
+  #     tags:
+  #       - latest
+  #       - latest-${DRONE_COMMIT_SHA:0:8}
+  #   when:
+  #     branch:
+  #     - dev
+  #     event:
+  #       exclude:
+  #       - pull_request
+
+  # - name: publish with version tag
+  #   image: plugins/docker
+  #   settings:
+  #     registry: registry.super-ego.info
+  #     username: regseuser
+  #     password: d$Wnvh&%Wm
+  #     repo: registry.super-ego.info/se-backoffice-billing-admin
+  #     tags:
+  #       - ${DRONE_TAG##v}
+  #       - ${DRONE_TAG##v}-master-${DRONE_COMMIT_SHA:0:8}
+  #   when:
+  #     ref:
+  #     - refs/tags/*
+  #     event:
+  #     - tag
+
+  # - name: deploy from ${DRONE_BRANCH,,} branch to staging bare metal server
+  #   image: plugins/ansible
+  #   settings:
+  #     playbook: .ansible/playbook.yml
+  #     inventory: .ansible/inventory
+  #     private_key:
+  #       from_secret: ansible_private_key
+  #   when:
+  #     branch:
+  #     - dev
+  #     event:
+  #       exclude:
+  #       - pull_request
+
+  - name: deploy from ${DRONE_BRANCH,,} branch to stage kubernetes cluster
+    image: quay.io/honestbee/drone-kubernetes
+    kubernetes_server:
+      from_secret: kubernetes_server
+    kubernetes_token:
+      from_secret: kubernetes_token
+    namespace: dev
+    deployment: billing-service-admin
+    repo: registry.super-ego.info/se-backoffice-billing-admin
+    container: billing-service-admin
+    tag: 1.0.0
+    tag: 1.0.0-master-8c6a243f
+    when:
+      # branch:
+      # - dev
+      event:
+        exclude:
+        - pull_request
+
+#   - name: notify
+#     image: plugins/slack
+#     settings:
+#       webhook: https://hooks.slack.com/services/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
+#       channel: notifications
+#       username: drone
+#       icon_url: https://images.g2crowd.com/uploads/product/image/large_detail/large_detail_0a98b361b4a2f75929095c643ee81754/drone-io.png
+#       template: "*{{build.status}}*. {{build.author}}'s workflow in {{repo.name}} ({{build.branch}}{{build.tag}}).\nCommit: <https://github.com/{{ repo.owner }}/{{ repo.name }}/commit/{{ build.commit }}|{{ truncate build.commit 8 }}>\n More info {{build.link}}"
+#     when:
+#       status: [ success, failure ]
+
+# volumes:
+# - name: deps
+#   temp: {}
