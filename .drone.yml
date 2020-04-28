@@ -109,7 +109,7 @@ steps:
     commands:
     - echo $KUBERNETES_SERVER
     - echo ${KUBERNETES_SERVER}
-    - cat $KUBERNETES_SERVER
+    - $KUBERNETES_SERVER > 1.txt && cat 1.txt
     - echo ${PLUGIN_NAMESPACE}
     - echo ${PLUGIN_KUBERNETES_USER}
     - echo ${PLUGIN_KUBERNETES_TOKEN}
