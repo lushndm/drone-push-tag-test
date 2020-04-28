@@ -79,7 +79,7 @@ steps:
 
   - name: deploy from ${DRONE_BRANCH,,} branch to stage kubernetes cluster
     # image: quay.io/honestbee/drone-kubernetes
-    image: lushndm/drone-kubernetes:0.1
+    image: lushndm/drone-kubernetes:0.2
     kubernetes_server:
       from_secret: KUBERNETES_SERVER
     kubernetes_token:
