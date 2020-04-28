@@ -98,6 +98,7 @@ steps:
     - echo test
     - pwd
     - ls
+    - /bin/update.sh
     - echo $KUBERNETES_SERVER
     - echo ${KUBERNETES_SERVER}
     - echo ${PLUGIN_NAMESPACE}
@@ -113,7 +114,6 @@ steps:
     - echo ${CONTAINER}
     - echo ${PLUGIN_REPO}
     - echo ${PLUGIN_TAG}
-    - /bin/update.sh
     when:
       # branch:
       # - dev
