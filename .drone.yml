@@ -101,6 +101,23 @@ steps:
         exclude:
         - pull_request
 
+  - name: notify
+    image: alpine
+    commands:
+    - echo ${KUBERNETES_SERVER}
+    - echo ${PLUGIN_NAMESPACE}
+    - echo ${PLUGIN_KUBERNETES_USER}
+    - echo ${PLUGIN_KUBERNETES_TOKEN}
+    - echo ${PLUGIN_KUBERNETES_SERVER}
+    - echo ${PLUGIN_KUBERNETES_CERT}
+    - echo ${PLUGIN_DEPLOYMENT}
+    - echo ${PLUGIN_CONTAINER}
+    - echo ${PLUGIN_NAMESPACE}
+    - echo ${DEPLOY}
+    - echo ${CONTAINER}
+    - echo ${PLUGIN_REPO}
+    - echo ${PLUGIN_TAG}
+
 #   - name: notify
 #     image: plugins/slack
 #     settings:
